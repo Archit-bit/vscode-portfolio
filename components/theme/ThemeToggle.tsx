@@ -11,16 +11,16 @@ export default function ThemeToggle() {
 
   if (!mounted) return null;
 
-  const isDracula = theme === "dracula";
+  const isDark = theme === "dark";
   return (
     <button
       aria-label="Toggle theme"
-      onClick={() => setTheme(isDracula ? "light" : "dracula")}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
       className="inline-flex items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--panel)] px-3 py-1.5 text-sm hover:bg-[var(--panel-2)] transition-colors"
     >
-      {isDracula ? <Sun size={16} /> : <Moon size={16} />}
+      {isDark ? <Sun size={16} /> : <Moon size={16} />}
       <span className="hidden sm:inline">
-        {isDracula ? "Light" : "Dracula"}
+        {isDark ? "Light" : "Dracula"}
       </span>
     </button>
   );

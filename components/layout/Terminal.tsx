@@ -26,7 +26,6 @@ function typewriterEffect(
 }
 
 function renderColoredLine(line: string, key: number) {
-  // Error-like messages
   if (/error|not found|failed|500/i.test(line)) {
     return (
       <div key={key} className="pl-4 whitespace-pre text-red-400">
@@ -34,8 +33,6 @@ function renderColoredLine(line: string, key: number) {
       </div>
     );
   }
-
-  // Success-like messages
   if (/success|done|compiled|200|✔|✓/i.test(line)) {
     return (
       <div key={key} className="pl-4 whitespace-pre text-green-400">
@@ -43,8 +40,6 @@ function renderColoredLine(line: string, key: number) {
       </div>
     );
   }
-
-  // Warning-like messages
   if (/warn|deprecated|⚠/i.test(line)) {
     return (
       <div key={key} className="pl-4 whitespace-pre text-yellow-400">
@@ -52,8 +47,6 @@ function renderColoredLine(line: string, key: number) {
       </div>
     );
   }
-
-  // JSON output (e.g., contact info)
   if (/^\s*[{[]/.test(line) || /:/.test(line)) {
     return (
       <div key={key} className="pl-4 whitespace-pre text-cyan-300">
@@ -61,8 +54,6 @@ function renderColoredLine(line: string, key: number) {
       </div>
     );
   }
-
-  // Default fallback
   return (
     <div key={key} className="pl-4 whitespace-pre text-gray-200">
       {line}
@@ -76,7 +67,6 @@ export default function Terminal() {
 
   const [history, setHistory] = useState<Command[]>([]);
   const [current, setCurrent] = useState("");
-
   const [caretVisible, setCaretVisible] = useState(true);
 
   useEffect(() => {
@@ -202,33 +192,31 @@ export default function Terminal() {
     setCurrent("");
   };
 
-  const prompt = "archit@portfolio:~/projects$";
-
   return (
-    <div className="h-64 flex flex-col border-t border-[var(--border)] bg-[#1e1e1e] font-mono text-sm">
-      {/* Header tabs like VS Code */}
-      <div className="h-8 flex items-center border-b border-[var(--border)] text-xs text-gray-400 px-4 space-x-6">
-        <span className="text-gray-200 border-b-2 border-[var(--purple)] pb-1">
+    <div className="h-64 flex flex-col border-t border-border bg-panel font-mono text-sm">
+      {/* Header tabs */}
+      <div className="h-8 flex items-center border-b border-border bg-panel text-xs text-muted px-4 space-x-6">
+        <span className="text-foreground border-b-2 border-purple pb-1">
           TERMINAL
         </span>
-        <span>PROBLEMS</span>
-        <span>OUTPUT</span>
-        <span>DEBUG CONSOLE</span>
+        <span className="hover:text-foreground">PROBLEMS</span>
+        <span className="hover:text-foreground">OUTPUT</span>
+        <span className="hover:text-foreground">DEBUG CONSOLE</span>
       </div>
 
       {/* Terminal body */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-1 text-gray-100">
+      <div className="flex-1 overflow-y-auto p-3 space-y-1">
         {history.map((cmd, i) => (
           <div key={i}>
             <div className="flex">
               <span className="flex-shrink-0">
                 <span className="text-green-400">archit</span>
-                <span className="text-yellow-400">@portfolio</span>:
+                <span className="text-yellow-300">@portfolio</span>:
                 <span className="text-cyan-400">~/projects</span>
-                <span className="text-gray-200">$</span>
+                <span className="text-gray-300">$</span>
               </span>
               &nbsp;
-              <span className="text-gray-100">{cmd.input}</span>
+              <span className="text-foreground">{cmd.input}</span>
             </div>
             {cmd.output.map((line, j) => renderColoredLine(line, j))}
           </div>
@@ -238,23 +226,23 @@ export default function Terminal() {
       {/* Input row */}
       <form
         onSubmit={handleCommand}
-        className="flex border-t border-[var(--border)] bg-[#1e1e1e] px-3 py-2"
+        className="flex border-t border-border bg-panel px-3 py-2"
       >
         <span className="flex-shrink-0">
           <span className="text-green-400">archit</span>
-          <span className="text-yellow-400">@portfolio</span>:
+          <span className="text-yellow-300">@portfolio</span>:
           <span className="text-cyan-400">~/projects</span>
-          <span className="text-gray-200">$</span>
+          <span className="text-gray-300">$</span>
         </span>
         &nbsp;
         <input
           value={current}
           onChange={(e) => setCurrent(e.target.value)}
-          className="flex-1 bg-transparent outline-none text-gray-100 caret-gray-100"
+          className="flex-1 bg-transparent outline-none text-foreground caret-foreground"
           autoFocus
         />
         {caretVisible && (
-          <span className="w-1 bg-gray-100 self-center mb-1 animate-pulse" />
+          <span className="w-1 bg-foreground self-center mb-1 animate-pulse" />
         )}
       </form>
     </div>

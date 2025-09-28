@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Bot } from "lucide-react";
+import { Bot, X, Send } from "lucide-react";
 
 type Message = {
   sender: "user" | "bot";
@@ -22,20 +22,28 @@ export default function Chatbot() {
     if (!input.trim()) return;
 
     const userMsg: Message = { sender: "user", text: input };
-    const botMsg: Message = { sender: "bot", text: "Ramu Kaka is thinking..." };
+    const botMsg: Message = {
+      sender: "bot",
+      text: `Ramu Kaka received: "${input}" (I’ll get smarter soon 👀)`,
+    };
 
     setMessages((prev) => [...prev, userMsg, botMsg]);
     setInput("");
   };
 
   return (
-    <div className="flex flex-col w-full h-full bg-[#1e1e1e]">
+    <div className="flex flex-col h-full bg-[#1e1e1e] text-gray-100">
       {/* Header */}
-      <div className="h-10 flex items-center px-3 border-b border-[var(--border)] bg-[#2b2d3a]">
-        <Bot className="mr-2 text-purple-400" size={18} />
-        <span className="text-gray-200 font-medium">
-          Archit's Butler — Ramu Kaka
-        </span>
+      <div className="h-10 flex items-center justify-between px-3 border-b border-[#333] bg-[#252526]">
+        <div className="flex items-center space-x-2">
+          <Bot className="text-purple-400" size={18} />
+          <span className="text-sm font-medium">
+            Archit's Butler — Ramu Kaka
+          </span>
+        </div>
+        <button className="text-gray-400 hover:text-gray-200">
+          <X size={16} />
+        </button>
       </div>
 
       {/* Messages */}
@@ -45,8 +53,8 @@ export default function Chatbot() {
             key={i}
             className={`p-2 rounded-md max-w-[75%] ${
               msg.sender === "user"
-                ? "ml-auto bg-purple-600 text-white"
-                : "bg-gray-700 text-gray-100"
+                ? "bg-purple-600 text-white self-end ml-auto"
+                : "bg-[#2d2d30] text-gray-200"
             }`}
           >
             {msg.text}
@@ -57,19 +65,19 @@ export default function Chatbot() {
       {/* Input */}
       <form
         onSubmit={sendMessage}
-        className="flex border-t border-[var(--border)] px-3 py-2 bg-[#2b2d3a]"
+        className="flex items-center border-t border-[#333] bg-[#252526] p-2"
       >
         <input
+          className="flex-1 bg-[#1e1e1e] rounded-md px-3 py-1 text-gray-100 placeholder-gray-500 outline-none"
+          placeholder="Ask Ramu Kaka..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask Ramu Kaka..."
-          className="flex-1 bg-transparent outline-none text-gray-100"
         />
         <button
           type="submit"
-          className="ml-2 px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-500"
+          className="ml-2 p-2 rounded-md bg-purple-600 hover:bg-purple-500"
         >
-          Send
+          <Send size={16} className="text-white" />
         </button>
       </form>
     </div>

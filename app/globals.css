@@ -3,30 +3,27 @@
 @tailwind utilities;
 
 /* ---------- Theme Tokens ---------- */
+/* ---------- Theme Tokens ---------- */
 :root {
-  /* Light */
+  /* Light theme */
   --background: #ffffff;
   --foreground: #171717;
-
   --panel: #f6f7f9;
   --panel-2: #eef0f3;
   --border: #e5e7eb;
   --muted: #6b7280;
-
   --accent: #2563eb;
   --accent-2: #3b82f6;
 }
 
-/* Dracula */
-html.dracula {
+html.dark {
+  /* Dracula */
   --background: #282a36;
   --foreground: #f8f8f2;
-
   --panel: #2b2d3a;
   --panel-2: #333648;
   --border: #3b3e53;
   --muted: #a1a1b5;
-
   --red: #ff5555;
   --orange: #ffb86c;
   --yellow: #f1fa8c;
@@ -34,6 +31,21 @@ html.dracula {
   --purple: #bd93f9;
   --pink: #ff79c6;
   --cyan: #8be9fd;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
 }
 
 * {

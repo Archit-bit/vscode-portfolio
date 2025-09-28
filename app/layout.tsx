@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme/ThemeProvider";
-import ThemeToggle from "@/components/theme/ThemeToggle";
-import Sidebar from "@/components/layout/Sidebar";
-import Terminal from "@/components/layout/Terminal";
+import type { Metadata } from "next";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import { ThemeProvider } from "next-themes";
 import { FileProvider } from "@/components/layout/FileContext";
+import RootLayoutClient from "@/components/layout/RootLayoutClient";
+import ThemeToggle from "@/components/theme/ThemeToggle";
 
 export const metadata: Metadata = {
-  title: "Archit Kaushik — Portfolio",
-  description: "VS Code–inspired developer portfolio",
+  title: "Archit Kaushik - Portfolio",
+  description: "VS Code inspired portfolio",
 };
 
 export default function RootLayout({
@@ -18,25 +19,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-dvh bg-[var(--background)] text-[var(--foreground)] antialiased transition-colors">
-        <FileProvider>
-          <ThemeProvider>
-            {/* Top bar */}
-            <header className="flex items-center justify-between px-4 h-12 border-b border-[var(--border)] bg-[var(--panel)]/60 backdrop-blur">
-              <div className="text-sm opacity-80">archit-portfolio</div>
+      <body
+        className={`${GeistSans.variable} ${GeistMono.variable} antialiased bg-background text-foreground`}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+        >
+          <FileProvider>
+            <RootLayoutClient>{children}</RootLayoutClient>
+            {/* Theme Toggle button */}
+            <div className="absolute top-2 right-2">
               <ThemeToggle />
-            </header>
-
-            {/* Main VS Code-like shell */}
-            <div className="flex h-[calc(100vh-3rem)]">
-              <Sidebar />
-              <main className="flex-1 flex flex-col">
-                <div className="flex-1 overflow-auto">{children}</div>
-                <Terminal />
-              </main>
             </div>
-          </ThemeProvider>
-        </FileProvider>
+          </FileProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
